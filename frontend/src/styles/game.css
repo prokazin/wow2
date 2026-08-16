@@ -1,9 +1,13 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 .app {
   height: 100vh;
   background: #1a0a0a;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  font-family: Arial, sans-serif;
+  color: #e8d5b5;
 }
 
 .game-container {
@@ -23,24 +27,27 @@
   padding: 15px;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .resource-item {
   text-align: center;
+  min-width: 60px;
 }
 
 .resource-item .label {
-  font-size: 12px;
+  font-size: 11px;
   color: #8a7a6a;
 }
 
 .resource-item .value {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
-  color: #e8d5b5;
 }
 
 .gold { color: #ffd700; }
+.ore { color: #c8a050; }
+.ingot { color: #a0c8e0; }
 
 .tabs {
   display: flex;
@@ -56,7 +63,7 @@
   background: transparent;
   border: none;
   color: #8a7a6a;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
