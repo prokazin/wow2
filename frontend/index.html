@@ -3,109 +3,817 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Orc Mine</title>
+  <title>Orc Mine - WoW Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet" />
   <style>
+    /* ===== БАЗА ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      background: #1a0a0a;
-      font-family: Arial, sans-serif;
-      color: #e8d5b5;
-      height: 100vh;
+      background: #0a0505;
+      font-family: 'Cinzel', 'Times New Roman', serif;
+      color: #d4c4a0;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, rgba(80, 40, 20, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 80%, rgba(40, 20, 60, 0.2) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, rgba(30, 15, 10, 0.1) 0px, rgba(30, 15, 10, 0.1) 2px, transparent 2px, transparent 4px);
     }
+
+    /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
     .container {
-      max-width: 400px;
+      max-width: 480px;
       width: 100%;
-      padding: 20px;
-      background: #2a1a1a;
-      border-radius: 16px;
-      border: 2px solid #5a3a2a;
+      padding: 16px;
+      margin: 10px;
+      background: linear-gradient(180deg, #1a0f0a 0%, #0d0805 100%);
+      border: 3px solid #6b4c32;
+      border-radius: 12px;
+      box-shadow:
+        0 0 40px rgba(107, 76, 50, 0.2),
+        inset 0 0 60px rgba(40, 20, 10, 0.5);
+      position: relative;
+    }
+
+    /* ===== ДЕКОРАТИВНЫЕ УГЛЫ (как в WoW) ===== */
+    .container::before,
+    .container::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-color: #8a6b4b;
+      border-style: solid;
+      pointer-events: none;
+    }
+    .container::before {
+      top: -2px;
+      left: -2px;
+      border-width: 4px 0 0 4px;
+      border-radius: 4px 0 0 0;
+    }
+    .container::after {
+      bottom: -2px;
+      right: -2px;
+      border-width: 0 4px 4px 0;
+      border-radius: 0 0 4px 0;
+    }
+
+    /* ===== ЗАГОЛОВОК ===== */
+    .header {
+      text-align: center;
+      padding: 12px 0 8px;
+      border-bottom: 2px solid #4a3520;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #ffd700;
+      text-shadow:
+        0 0 20px rgba(255, 215, 0, 0.15),
+        0 2px 4px rgba(0,0,0,0.8);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .header .subtitle {
+      font-size: 11px;
+      color: #8a7a6a;
+      letter-spacing: 6px;
+      margin-top: 2px;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    /* ===== РЕСУРСЫ (панель как в WoW) ===== */
+    .resources {
+      background: rgba(10, 5, 5, 0.8);
+      border: 1px solid #3a2a1a;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .resource-item {
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    .resource-item .icon {
+      font-size: 18px;
+      display: block;
+    }
+
+    .resource-item .label {
+      font-size: 9px;
+      color: #6a5a4a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 400;
+    }
+
+    .resource-item .value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #d4c4a0;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .value-gold { color: #ffd700 !important; }
+    .value-ore { color: #c8a050 !important; }
+    .value-iron { color: #a0b8c8 !important; }
+    .value-wood { color: #7a8a4a !important; }
+    .value-leather { color: #a08050 !important; }
+
+    /* ===== ВКЛАДКИ (как в WoW) ===== */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+      background: rgba(10, 5, 5, 0.6);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #2a1a10;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 8px 4px;
+      background: transparent;
+      border: none;
+      color: #6a5a4a;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .tab:hover {
+      color: #b4a490;
+      background: rgba(60, 40, 30, 0.3);
+    }
+
+    .tab.active {
+      color: #ffd700;
+      background: linear-gradient(180deg, rgba(60, 40, 30, 0.4), rgba(30, 20, 15, 0.6));
+      box-shadow: inset 0 1px 0 rgba(255, 215, 0, 0.15);
+    }
+
+    .tab .tab-icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    /* ===== КОНТЕНТ ВКЛАДОК ===== */
+    .tab-content {
+      display: none;
+      background: rgba(10, 5, 5, 0.5);
+      border: 1px solid #2a1a10;
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 200px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ===== WoW-КНОПКИ ===== */
+    .btn {
+      background: linear-gradient(180deg, #4a3525, #2a1a10);
+      border: 1px solid #5a4a3a;
+      color: #d4c4a0;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.2s;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      letter-spacing: 0.5px;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: linear-gradient(180deg, #6a4a35, #3a2a1a);
+      border-color: #8a6a4a;
+      box-shadow: 0 0 20px rgba(107, 76, 50, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0px);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(180deg, #6a5a2a, #3a2a10);
+      border-color: #8a7a3a;
+      color: #ffd700;
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(180deg, #8a7a3a, #5a4a1a);
+      border-color: #c8a84a;
+    }
+
+    .btn-ore {
+      background: linear-gradient(180deg, #3a4a2a, #1a2a10);
+      border-color: #4a6a3a;
+      color: #a0c880;
+    }
+
+    .btn-ore:hover {
+      background: linear-gradient(180deg, #4a6a3a, #2a3a1a);
+      border-color: #6a8a4a;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 11px;
+      width: auto;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 8px 0;
+    }
+
+    /* ===== КРАФТ ===== */
+    .craft-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .craft-item {
+      background: rgba(10, 5, 5, 0.7);
+      border: 1px solid #2a1a10;
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .craft-item:hover {
+      border-color: #5a4a3a;
+    }
+
+    .craft-item .emoji { font-size: 28px; display: block; }
+    .craft-item .name { font-size: 12px; font-weight: 700; margin: 4px 0; color: #d4c4a0; }
+    .craft-item .req { font-size: 10px; color: #6a5a4a; margin-bottom: 6px; }
+
+    .rarity-common { border-color: #6a6a6a; }
+    .rarity-uncommon { border-color: #4a8a4a; }
+    .rarity-rare { border-color: #4a4a8a; }
+    .rarity-epic { border-color: #8a4a8a; }
+    .rarity-legendary { border-color: #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
+
+    /* ===== РАБОТНИКИ ===== */
+    .worker-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .worker-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      background: rgba(10, 5, 5, 0.5);
+      border-radius: 4px;
+      border: 1px solid #1a1008;
+    }
+
+    .worker-row .name { font-size: 13px; font-weight: 700; }
+    .worker-row .level { font-size: 11px; color: #8a7a6a; }
+    .worker-row .level span { color: #ffd700; }
+
+    /* ===== РЫНОК ===== */
+    .market-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .market-item {
+      background: rgba(10, 5, 5, 0.5);
+      border: 1px solid #1a1008;
+      border-radius: 4px;
+      padding: 8px;
       text-align: center;
     }
-    h1 { color: #ffd700; font-size: 28px; margin-bottom: 10px; }
-    .gold { color: #ffd700; font-size: 32px; }
-    .btn {
-      background: #5a3a2a;
-      border: none;
-      color: #e8d5b5;
-      padding: 14px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 18px;
-      margin: 8px;
-      width: 80%;
-      transition: 0.2s;
+
+    .market-item .name { font-size: 11px; color: #8a7a6a; }
+    .market-item .price { font-size: 16px; font-weight: 700; color: #ffd700; }
+    .market-item .change { font-size: 11px; }
+    .change-up { color: #4a8a4a; }
+    .change-down { color: #8a4a4a; }
+
+    /* ===== СТАТУС-БАР ===== */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 4px 0;
+      border-top: 1px solid #1a1008;
+      margin-top: 12px;
+      font-size: 10px;
+      color: #4a3a2a;
+      letter-spacing: 0.5px;
     }
-    .btn:hover { background: #7a4a3a; }
-    .btn-mine { background: #2a5a2a; }
-    .btn-mine:hover { background: #3a7a3a; }
-    .btn-sell { background: #5a3a2a; }
-    .btn-sell:hover { background: #7a3a2a; }
-    .stats { margin: 15px 0; font-size: 16px; }
-    .stats span { color: #ffd700; }
+
+    /* ===== УВЕДОМЛЕНИЕ ===== */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 5, 5, 0.95);
+      border: 1px solid #5a4a3a;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      color: #d4c4a0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 100;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
+
+    .notification.show { opacity: 1; }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width: 400px) {
+      .container { padding: 10px; margin: 5px; }
+      .header h1 { font-size: 20px; letter-spacing: 2px; }
+      .resources { grid-template-columns: 1fr 1fr 1fr; padding: 8px; }
+      .resource-item .value { font-size: 15px; }
+      .btn { font-size: 11px; padding: 8px 12px; }
+      .craft-grid { grid-template-columns: 1fr 1fr; }
+      .market-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 350px) {
+      .resources { grid-template-columns: 1fr 1fr; }
+      .btn-grid { grid-template-columns: 1fr; }
+      .craft-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== СКРОЛЛ ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0a0505; }
+    ::-webkit-scrollbar-thumb { background: #4a3520; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6a4a35; }
+
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .pulse { animation: pulse 2s infinite; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>⛏️ Orc Mine</h1>
-  <div style="color:#8a7a6a; font-size:14px; margin-bottom:15px;">🏴‍☠️ Во имя Орды!</div>
 
-  <div class="stats">
-    <div>💰 Золото: <span id="gold">0</span></div>
-    <div>🪨 Руда: <span id="ore">0</span></div>
+  <!-- ===== ЗАГОЛОВОК ===== -->
+  <div class="header">
+    <h1>⛏️ Orc Mine</h1>
+    <div class="subtitle">⚔️ For the Horde ⚔️</div>
   </div>
 
-  <button class="btn btn-mine" onclick="mine()">⛏️ Добыть руду</button>
-  <button class="btn btn-sell" onclick="sell()">💰 Продать руду</button>
-
-  <div style="margin-top:15px; font-size:12px; color:#5a4a3a;">
-    ⚡ Работает! <span id="clickCount">0</span> кликов
+  <!-- ===== РЕСУРСЫ ===== -->
+  <div class="resources">
+    <div class="resource-item">
+      <span class="icon">💰</span>
+      <span class="label">Золото</span>
+      <span class="value value-gold" id="gold">0</span>
+    </div>
+    <div class="resource-item">
+      <span class="icon">🪨</span>
+      <span class="label">Руда</span>
+      <span class="value value-ore" id="ore">0</span>
+    </div>
+    <div class="resource-item">
+      <span class="icon">⚔️</span>
+      <span class="label">Уровень</span>
+      <span class="value" id="level" style="color:#8a7a6a;">1</span>
+    </div>
   </div>
+
+  <!-- ===== ВКЛАДКИ ===== -->
+  <div class="tabs">
+    <button class="tab active" data-tab="mining" onclick="switchTab('mining')">
+      <span class="tab-icon">⛏️</span>Добыча
+    </button>
+    <button class="tab" data-tab="craft" onclick="switchTab('craft')">
+      <span class="tab-icon">⚒️</span>Крафт
+    </button>
+    <button class="tab" data-tab="workers" onclick="switchTab('workers')">
+      <span class="tab-icon">👷</span>Рабочие
+    </button>
+    <button class="tab" data-tab="market" onclick="switchTab('market')">
+      <span class="tab-icon">🏪</span>Рынок
+    </button>
+  </div>
+
+  <!-- ===== ВКЛАДКА: ДОБЫЧА ===== -->
+  <div class="tab-content active" id="tab-mining">
+    <div class="btn-grid">
+      <button class="btn btn-ore" onclick="mine()">⛏️ Добыть руду</button>
+      <button class="btn btn-gold" onclick="sellAll()">💰 Продать всё</button>
+    </div>
+    <div style="text-align:center; font-size:12px; color:#4a3a2a; padding:6px 0;">
+      ⚡ Автодобыча: <span id="autoMine">0</span> руды/сек
+    </div>
+    <div style="margin-top:8px; background:rgba(10,5,5,0.5); border-radius:4px; padding:8px; text-align:center; border:1px solid #1a1008;">
+      <div style="font-size:11px; color:#6a5a4a;">ДОБЫТО ВСЕГО</div>
+      <div style="font-size:22px; font-weight:700; color:#ffd700;" id="totalMined">0</div>
+    </div>
+  </div>
+
+  <!-- ===== ВКЛАДКА: КРАФТ ===== -->
+  <div class="tab-content" id="tab-craft">
+    <div class="craft-grid">
+      <div class="craft-item rarity-common">
+        <span class="emoji">🟠</span>
+        <span class="name">Медный слиток</span>
+        <span class="req">5 руды</span>
+        <button class="btn btn-sm" onclick="craft('copper_ingot')">Создать</button>
+      </div>
+      <div class="craft-item rarity-uncommon">
+        <span class="emoji">⚪</span>
+        <span class="name">Стальной слиток</span>
+        <span class="req">10 руды</span>
+        <button class="btn btn-sm" onclick="craft('iron_ingot')">Создать</button>
+      </div>
+      <div class="craft-item rarity-common">
+        <span class="emoji">🗡️</span>
+        <span class="name">Медный меч</span>
+        <span class="req">3 слитка</span>
+        <button class="btn btn-sm" onclick="craft('copper_sword')">Создать</button>
+      </div>
+      <div class="craft-item rarity-rare">
+        <span class="emoji">⚔️</span>
+        <span class="name">Стальной меч</span>
+        <span class="req">5 слитков</span>
+        <button class="btn btn-sm" onclick="craft('iron_sword')">Создать</button>
+      </div>
+      <div class="craft-item rarity-uncommon">
+        <span class="emoji">⛑️</span>
+        <span class="name">Медный шлем</span>
+        <span class="req">4 слитка</span>
+        <button class="btn btn-sm" onclick="craft('copper_helmet')">Создать</button>
+      </div>
+      <div class="craft-item rarity-epic">
+        <span class="emoji">🛡️</span>
+        <span class="name">Стальная броня</span>
+        <span class="req">8 слитков</span>
+        <button class="btn btn-sm" onclick="craft('iron_armor')">Создать</button>
+      </div>
+    </div>
+    <div style="margin-top:10px; text-align:center; font-size:11px; color:#4a3a2a;">
+      📦 Предметов в инвентаре: <span id="itemCount">0</span>
+    </div>
+  </div>
+
+  <!-- ===== ВКЛАДКА: РАБОТНИКИ ===== -->
+  <div class="tab-content" id="tab-workers">
+    <div class="worker-list">
+      <div class="worker-row">
+        <span class="name">⛏️ Шахтёр</span>
+        <span class="level">Ур. <span id="minerLevel">1</span></span>
+        <button class="btn btn-sm" onclick="hireWorker('miner')">Нанять</button>
+      </div>
+      <div class="worker-row">
+        <span class="name">🔨 Кузнец</span>
+        <span class="level">Ур. <span id="smithLevel">1</span></span>
+        <button class="btn btn-sm" onclick="hireWorker('smith')">Нанять</button>
+      </div>
+      <div class="worker-row">
+        <span class="name">🪓 Лесоруб</span>
+        <span class="level">Ур. <span id="lumberjackLevel">1</span></span>
+        <button class="btn btn-sm" onclick="hireWorker('lumberjack')">Нанять</button>
+      </div>
+    </div>
+    <div style="margin-top:10px; text-align:center; font-size:11px; color:#4a3a2a;">
+      👷 Всего рабочих: <span id="totalWorkers">0</span>
+    </div>
+  </div>
+
+  <!-- ===== ВКЛАДКА: РЫНОК ===== -->
+  <div class="tab-content" id="tab-market">
+    <div class="market-grid" id="marketPrices">
+      <div class="market-item"><span class="name">🪨 Руда</span><span class="price" id="price_ore">2</span><span class="change change-up">↑ 0%</span></div>
+      <div class="market-item"><span class="name">🔩 Слиток</span><span class="price" id="price_ingot">5</span><span class="change change-up">↑ 0%</span></div>
+      <div class="market-item"><span class="name">🗡️ Меч</span><span class="price" id="price_sword">15</span><span class="change change-down">↓ 0%</span></div>
+      <div class="market-item"><span class="name">🛡️ Броня</span><span class="price" id="price_armor">25</span><span class="change change-up">↑ 0%</span></div>
+    </div>
+    <div style="margin-top:8px; text-align:center; font-size:10px; color:#4a3a2a;">
+      ⏱️ Цены обновляются каждый час
+    </div>
+  </div>
+
+  <!-- ===== СТАТУС-БАР ===== -->
+  <div class="status-bar">
+    <span>🏴‍☠️ OrcWarrior</span>
+    <span id="storageStatus">📦 0 / 500</span>
+  </div>
+
 </div>
 
+<!-- ===== УВЕДОМЛЕНИЕ ===== -->
+<div class="notification" id="notification"></div>
+
 <script>
-  let gold = 0;
-  let ore = 0;
-  let clicks = 0;
+// ============================================================
+// СОСТОЯНИЕ ИГРЫ
+// ============================================================
+const state = {
+  gold: 0,
+  ore: 0,
+  level: 1,
+  totalMined: 0,
+  inventory: {
+    copper_ingot: 0,
+    iron_ingot: 0,
+    copper_sword: 0,
+    iron_sword: 0,
+    copper_helmet: 0,
+    iron_armor: 0
+  },
+  workers: {
+    miner: { level: 1, count: 0 },
+    smith: { level: 1, count: 0 },
+    lumberjack: { level: 1, count: 0 }
+  },
+  maxStorage: 500,
+  autoMineRate: 0,
+  marketPrices: {
+    ore: 2,
+    ingot: 5,
+    sword: 15,
+    armor: 25
+  },
+  lastMarketUpdate: Date.now()
+};
 
-  function updateUI() {
-    document.getElementById('gold').textContent = gold;
-    document.getElementById('ore').textContent = ore;
-    document.getElementById('clickCount').textContent = clicks;
+// ============================================================
+// UI ОБНОВЛЕНИЕ
+// ============================================================
+function updateUI() {
+  document.getElementById('gold').textContent = Math.floor(state.gold);
+  document.getElementById('ore').textContent = Math.floor(state.ore);
+  document.getElementById('level').textContent = state.level;
+  document.getElementById('totalMined').textContent = Math.floor(state.totalMined);
+  document.getElementById('autoMine').textContent = state.autoMineRate.toFixed(1);
+
+  // Инвентарь
+  const totalItems = Object.values(state.inventory).reduce((a, b) => a + b, 0);
+  document.getElementById('itemCount').textContent = totalItems;
+
+  // Рабочие
+  document.getElementById('minerLevel').textContent = state.workers.miner.level;
+  document.getElementById('smithLevel').textContent = state.workers.smith.level;
+  document.getElementById('lumberjackLevel').textContent = state.workers.lumberjack.level;
+  const totalWorkers = state.workers.miner.count + state.workers.smith.count + state.workers.lumberjack.count;
+  document.getElementById('totalWorkers').textContent = totalWorkers;
+
+  // Хранилище
+  const total = state.ore + Object.values(state.inventory).reduce((a, b) => a + b, 0);
+  document.getElementById('storageStatus').textContent = `📦 ${Math.floor(total)} / ${state.maxStorage}`;
+
+  // Рынок
+  updateMarketUI();
+}
+
+function updateMarketUI() {
+  const prices = state.marketPrices;
+  document.getElementById('price_ore').textContent = prices.ore;
+  document.getElementById('price_ingot').textContent = prices.ingot;
+  document.getElementById('price_sword').textContent = prices.sword;
+  document.getElementById('price_armor').textContent = prices.armor;
+}
+
+// ============================================================
+// УВЕДОМЛЕНИЯ
+// ============================================================
+function notify(msg) {
+  const el = document.getElementById('notification');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._timeout);
+  el._timeout = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ============================================================
+// ВКЛАДКИ
+// ============================================================
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+
+  document.querySelector(`.tab[data-tab="${tab}"]`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+// ============================================================
+// ДЕЙСТВИЯ
+// ============================================================
+
+// Добыча
+function mine() {
+  const total = state.ore + Object.values(state.inventory).reduce((a, b) => a + b, 0);
+  if (total >= state.maxStorage) {
+    notify('❌ Хранилище заполнено!');
+    return;
   }
+  const mined = Math.floor(Math.random() * 4) + 1;
+  state.ore += mined;
+  state.totalMined += mined;
+  updateUI();
+  notify(`⛏️ Добыто ${mined} руды`);
+}
 
-  function mine() {
-    const mined = Math.floor(Math.random() * 4) + 1;
-    ore += mined;
-    clicks++;
-    updateUI();
+// Продажа
+function sellAll() {
+  if (state.ore === 0) {
+    notify('❌ Нет руды для продажи');
+    return;
   }
+  const price = state.marketPrices.ore;
+  const earned = state.ore * price;
+  state.gold += earned;
+  notify(`💰 Продано ${Math.floor(state.ore)} руды за ${earned} золота`);
+  state.ore = 0;
+  updateUI();
+}
 
-  function sell() {
-    if (ore === 0) {
-      alert('Нет руды для продажи!');
-      return;
+// Крафт
+function craft(itemId) {
+  const recipes = {
+    copper_ingot: { cost: { ore: 5 }, result: 'Медный слиток', key: 'copper_ingot' },
+    iron_ingot: { cost: { ore: 10 }, result: 'Стальной слиток', key: 'iron_ingot' },
+    copper_sword: { cost: { copper_ingot: 3 }, result: 'Медный меч', key: 'copper_sword' },
+    iron_sword: { cost: { iron_ingot: 5 }, result: 'Стальной меч', key: 'iron_sword' },
+    copper_helmet: { cost: { copper_ingot: 4 }, result: 'Медный шлем', key: 'copper_helmet' },
+    iron_armor: { cost: { iron_ingot: 8 }, result: 'Стальная броня', key: 'iron_armor' }
+  };
+
+  const recipe = recipes[itemId];
+  if (!recipe) return;
+
+  // Проверка ресурсов
+  for (const [res, amount] of Object.entries(recipe.cost)) {
+    if (res === 'ore') {
+      if (state.ore < amount) {
+        notify(`❌ Не хватает руды (нужно ${amount})`);
+        return;
+      }
+    } else {
+      if ((state.inventory[res] || 0) < amount) {
+        notify(`❌ Не хватает ${recipe.result} (нужно ${amount})`);
+        return;
+      }
     }
-    const price = 2;
-    const earned = ore * price;
-    gold += earned;
-    ore = 0;
-    clicks++;
-    updateUI();
   }
 
-  // Авто-добыча каждые 3 секунды
-  setInterval(() => {
-    const mined = Math.floor(Math.random() * 2) + 1;
-    ore += mined;
-    updateUI();
-  }, 3000);
+  // Списание ресурсов
+  for (const [res, amount] of Object.entries(recipe.cost)) {
+    if (res === 'ore') {
+      state.ore -= amount;
+    } else {
+      state.inventory[res] -= amount;
+    }
+  }
+
+  state.inventory[recipe.key] = (state.inventory[recipe.key] || 0) + 1;
+  notify(`⚒️ Создан ${recipe.result}!`);
+  updateUI();
+}
+
+// Нанять рабочего
+function hireWorker(type) {
+  const worker = state.workers[type];
+  const cost = 20 * (worker.count + 1);
+  if (state.gold < cost) {
+    notify(`❌ Нужно ${cost} золота`);
+    return;
+  }
+  state.gold -= cost;
+  worker.count += 1;
+  notify(`👷 Нанят ${type} за ${cost} золота`);
+  updateUI();
+}
+
+// ============================================================
+// РЫНОК (обновление каждый час)
+// ============================================================
+function updateMarket() {
+  const now = Date.now();
+  const oneHour = 60 * 60 * 1000;
+  if (now - state.lastMarketUpdate < oneHour) return;
+
+  const items = ['ore', 'ingot', 'sword', 'armor'];
+  items.forEach(item => {
+    const change = (Math.random() - 0.5) * 0.3;
+    const newPrice = Math.max(1, state.marketPrices[item] * (1 + change));
+    state.marketPrices[item] = Math.round(newPrice * 100) / 100;
+  });
+
+  state.lastMarketUpdate = now;
+  updateUI();
+  notify('📊 Цены на рынке обновлены!');
+}
+
+// ============================================================
+// ТИК (каждую секунду)
+// ============================================================
+function tick() {
+  // Автодобыча от шахтёров
+  const minerSpeed = state.workers.miner.count * state.workers.miner.level * 0.2;
+  state.autoMineRate = minerSpeed;
+
+  const total = state.ore + Object.values(state.inventory).reduce((a, b) => a + b, 0);
+  if (total < state.maxStorage && state.autoMineRate > 0) {
+    const mined = Math.min(state.autoMineRate, state.maxStorage - total);
+    state.ore += mined;
+    state.totalMined += mined;
+  }
 
   updateUI();
-  console.log('⛏️ Orc Mine запущена!');
+}
+
+// ============================================================
+// СОХРАНЕНИЕ / ЗАГРУЗКА
+// ============================================================
+function saveGame() {
+  try {
+    localStorage.setItem('orcMineWoW', JSON.stringify(state));
+  } catch (e) {}
+}
+
+function loadGame() {
+  try {
+    const data = localStorage.getItem('orcMineWoW');
+    if (data) {
+      const saved = JSON.parse(data);
+      Object.assign(state, saved);
+    }
+  } catch (e) {}
+}
+
+// ============================================================
+// АВТОМАТИЧЕСКИЕ ЗАПУСКИ
+// ============================================================
+setInterval(tick, 1000);
+setInterval(saveGame, 5000);
+setInterval(updateMarket, 60 * 60 * 1000);
+
+window.addEventListener('beforeunload', saveGame);
+
+// ============================================================
+// СТАРТ
+// ============================================================
+loadGame();
+updateUI();
+console.log('⛏️ Orc Mine (WoW Style) запущена!');
+console.log('📦 Состояние:', state);
 </script>
 
 </body>
