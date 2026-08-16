@@ -11,13 +11,102 @@
       font-family: Arial, sans-serif;
       color: #e8d5b5;
       height: 100vh;
-      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    #root { height: 100vh; }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      background: #2a1a1a;
+      border-radius: 16px;
+      border: 2px solid #5a3a2a;
+      text-align: center;
+    }
+    h1 { color: #ffd700; font-size: 28px; margin-bottom: 10px; }
+    .gold { color: #ffd700; font-size: 32px; }
+    .btn {
+      background: #5a3a2a;
+      border: none;
+      color: #e8d5b5;
+      padding: 14px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      margin: 8px;
+      width: 80%;
+      transition: 0.2s;
+    }
+    .btn:hover { background: #7a4a3a; }
+    .btn-mine { background: #2a5a2a; }
+    .btn-mine:hover { background: #3a7a3a; }
+    .btn-sell { background: #5a3a2a; }
+    .btn-sell:hover { background: #7a3a2a; }
+    .stats { margin: 15px 0; font-size: 16px; }
+    .stats span { color: #ffd700; }
   </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+
+<div class="container">
+  <h1>⛏️ Orc Mine</h1>
+  <div style="color:#8a7a6a; font-size:14px; margin-bottom:15px;">🏴‍☠️ Во имя Орды!</div>
+
+  <div class="stats">
+    <div>💰 Золото: <span id="gold">0</span></div>
+    <div>🪨 Руда: <span id="ore">0</span></div>
+  </div>
+
+  <button class="btn btn-mine" onclick="mine()">⛏️ Добыть руду</button>
+  <button class="btn btn-sell" onclick="sell()">💰 Продать руду</button>
+
+  <div style="margin-top:15px; font-size:12px; color:#5a4a3a;">
+    ⚡ Работает! <span id="clickCount">0</span> кликов
+  </div>
+</div>
+
+<script>
+  let gold = 0;
+  let ore = 0;
+  let clicks = 0;
+
+  function updateUI() {
+    document.getElementById('gold').textContent = gold;
+    document.getElementById('ore').textContent = ore;
+    document.getElementById('clickCount').textContent = clicks;
+  }
+
+  function mine() {
+    const mined = Math.floor(Math.random() * 4) + 1;
+    ore += mined;
+    clicks++;
+    updateUI();
+  }
+
+  function sell() {
+    if (ore === 0) {
+      alert('Нет руды для продажи!');
+      return;
+    }
+    const price = 2;
+    const earned = ore * price;
+    gold += earned;
+    ore = 0;
+    clicks++;
+    updateUI();
+  }
+
+  // Авто-добыча каждые 3 секунды
+  setInterval(() => {
+    const mined = Math.floor(Math.random() * 2) + 1;
+    ore += mined;
+    updateUI();
+  }, 3000);
+
+  updateUI();
+  console.log('⛏️ Orc Mine запущена!');
+</script>
+
 </body>
 </html>
