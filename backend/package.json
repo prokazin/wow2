@@ -1,0 +1,13 @@
+{
+  "name": "orc-mine-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node api/game.js",
+    "dev": "node --watch api/game.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
